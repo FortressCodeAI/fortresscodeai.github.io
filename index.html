@@ -1,589 +1,549 @@
-,<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FortressCode AI — Compliance Marketplace</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=Playfair+Display:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-:root {
-  --void: #080b0f; --deep: #0d1117; --surface: #131920;
-  --border: #1e2932; --border-bright: #2a3a47;
-  --text: #c8d6e0; --text-dim: #5a7282; --text-bright: #e8f4ff;
-  --green: #00d97e; --green-dim: #00d97e22;
-  --amber: #f5a623; --amber-dim: #f5a62318;
-  --red: #e84040; --blue: #4a9eff; --blue-dim: #4a9eff15;
-  --purple: #c084fc; --purple-dim: #c084fc18;
-}
-html { font-size: 16px; scroll-behavior: smooth; }
-body { background: var(--void); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; line-height: 1.6; overflow-x: hidden; }
-body::before { content: ''; position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); pointer-events: none; z-index: 9999; }
+  <head>
+    <meta charset="UTF-8" />
+    <title>FortressCodeAI — Deterministic Governance Artifacts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      :root {
+        --bg: #05070b;
+        --surface: #0d1117;
+        --surface-soft: #111827;
+        --accent: #22c55e;
+        --accent-soft: rgba(34, 197, 94, 0.12);
+        --accent-strong: #16a34a;
+        --text: #e5e7eb;
+        --text-dim: #9ca3af;
+        --border: #1f2933;
+        --danger: #f97373;
+        --link: #60a5fa;
+        --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+          "Segoe UI", sans-serif;
+        --radius: 10px;
+      }
 
-/* NAV */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(8,11,15,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 2rem; height: 56px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo { display: flex; align-items: center; gap: 0.75rem; }
-.nav-shield { width: 28px; height: 28px; background: var(--green); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); flex-shrink: 0; }
-.nav-name { font-family: 'IBM Plex Mono', monospace; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.08em; color: var(--text-bright); }
-.nav-name span { color: var(--green); }
-.nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
-.nav-links a { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
-.nav-links a:hover { color: var(--green); }
-.nav-cta { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--void); background: var(--green); padding: 0.4rem 1rem; text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
-.nav-cta:hover { opacity: 0.85; }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-/* COUNTDOWN BANNER */
-.deadline-banner { background: linear-gradient(90deg, #1a0a0a, #200d0d); border-top: 1px solid #3a1010; border-bottom: 1px solid #3a1010; padding: 0.8rem 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 56px; }
-.deadline-banner-text { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
-.countdown-units { display: flex; gap: 1rem; align-items: center; }
-.countdown-unit { display: flex; flex-direction: column; align-items: center; }
-.countdown-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #ff6060; font-weight: 700; line-height: 1; min-width: 2ch; text-align: center; }
-.countdown-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); opacity: 0.7; }
-.countdown-sep { font-family: 'IBM Plex Mono', monospace; font-size: 1.2rem; color: #ff6060; opacity: 0.5; margin-bottom: 0.8rem; }
+      body {
+        font-family: var(--font-sans);
+        background: radial-gradient(circle at top, #020617 0, #020617 40%, #020617 100%);
+        color: var(--text);
+        min-height: 100vh;
+      }
 
-/* HERO */
-.hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 4rem 2rem; position: relative; overflow: hidden; }
-.hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(0,217,126,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,217,126,0.04) 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black, transparent); }
-.hero-inner { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
-.hero-status { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); border: 1px solid var(--green-dim); background: var(--green-dim); padding: 0.35rem 0.8rem; margin-bottom: 2.5rem; }
-.hero-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-.hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 400; line-height: 1.05; letter-spacing: -0.02em; color: var(--text-bright); margin-bottom: 1.5rem; max-width: 820px; }
-.hero-title em { font-style: italic; color: var(--green); }
-.hero-title .dim { color: var(--text-dim); }
-.hero-sub { font-size: 1.05rem; color: var(--text-dim); max-width: 560px; margin-bottom: 3rem; line-height: 1.75; }
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-.btn-primary { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--void); background: var(--green); padding: 0.85rem 1.8rem; text-decoration: none; font-weight: 500; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
-.btn-primary:hover { background: #00f090; transform: translateY(-1px); }
-.btn-secondary { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); background: transparent; border: 1px solid var(--border-bright); padding: 0.85rem 1.8rem; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
-.btn-secondary:hover { border-color: var(--green); color: var(--green); }
-.hero-stats { display: flex; gap: 3rem; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); flex-wrap: wrap; }
-.stat { display: flex; flex-direction: column; gap: 0.2rem; }
-.stat-value { font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--text-bright); line-height: 1; }
-.stat-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-dim); }
+      .page {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 32px 16px 64px;
+      }
 
-/* SECTIONS */
-section { padding: 5rem 2rem; }
-.section-inner { max-width: 1100px; margin: 0 auto; }
-.section-label { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 1rem; }
-.section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 400; color: var(--text-bright); line-height: 1.15; margin-bottom: 1rem; }
-.section-sub { font-size: 0.95rem; color: var(--text-dim); max-width: 520px; line-height: 1.75; margin-bottom: 3rem; }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 32px;
+      }
 
-/* TAB SWITCHER */
-.tab-switcher { display: flex; gap: 0; margin-bottom: 2.5rem; border: 1px solid var(--border); width: fit-content; }
-.tab-btn { font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.7rem 1.4rem; border: none; background: transparent; color: var(--text-dim); cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--border); }
-.tab-btn:last-child { border-right: none; }
-.tab-btn.active { background: var(--green); color: var(--void); font-weight: 500; }
-.tab-content { display: none; }
-.tab-content.active { display: block; }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
 
-/* PACKS GRID */
-.packs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
-.pack-card { background: var(--deep); padding: 2rem; position: relative; transition: background 0.2s; cursor: pointer; }
-.pack-card:hover { background: var(--surface); }
-.pack-card.featured { background: linear-gradient(135deg, #0d1a12, #0d1117); }
-.pack-card.featured::before { content: 'MOST POPULAR'; position: absolute; top: 1rem; right: 1rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.58rem; letter-spacing: 0.14em; color: var(--green); border: 1px solid var(--green-dim); padding: 0.2rem 0.5rem; background: var(--green-dim); }
-.pack-tag { font-family: 'IBM Plex Mono', monospace; font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; padding: 0.2rem 0.6rem; }
-.pack-tag.eu { color: var(--blue); background: var(--blue-dim); }
-.pack-tag.deterministic { color: var(--green); background: var(--green-dim); }
-.pack-tag.enterprise { color: var(--amber); background: var(--amber-dim); }
-.pack-tag.lifecycle { color: var(--purple); background: var(--purple-dim); }
-.pack-tag.governance { color: var(--amber); background: var(--amber-dim); }
-.pack-name { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 400; color: var(--text-bright); margin-bottom: 0.6rem; line-height: 1.2; }
-.pack-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; margin-bottom: 1.5rem; }
-.pack-articles { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
-.pack-article { font-family: 'IBM Plex Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; color: var(--text-dim); border: 1px solid var(--border-bright); padding: 0.2rem 0.5rem; }
-.pack-deliverable { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--green); letter-spacing: 0.06em; margin-bottom: 1rem; padding: 0.4rem 0.6rem; border-left: 2px solid var(--green); background: var(--green-dim); }
-.pack-trigger { font-size: 0.78rem; color: var(--text-dim); margin-bottom: 1.2rem; }
-.pack-trigger span { color: var(--amber); }
-.pack-price { display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 1.2rem; }
-.pack-price-value { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--text-bright); }
-.pack-price-period { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.06em; }
-.pack-cta { display: block; text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.7rem; text-decoration: none; transition: all 0.2s; border: 1px solid var(--border-bright); color: var(--text); }
-.pack-cta:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
-.pack-card.featured .pack-cta { background: var(--green); color: var(--void); border-color: var(--green); font-weight: 500; }
-.pack-card.featured .pack-cta:hover { background: #00f090; }
+      .brand-mark {
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        background: radial-gradient(circle at 30% 20%, #4ade80, #16a34a 40%, #052e16 100%);
+        box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.4),
+          0 0 18px rgba(34, 197, 94, 0.35);
+      }
 
-/* FREE TIER */
-.free-tier { border: 1px solid var(--border-bright); background: var(--deep); padding: 2rem; margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
-.free-tier-badge { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); border: 1px solid var(--green-dim); background: var(--green-dim); padding: 0.3rem 0.7rem; display: inline-block; margin-bottom: 0.8rem; }
-.free-tier h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 400; color: var(--text-bright); margin-bottom: 0.4rem; }
-.free-tier p { font-size: 0.85rem; color: var(--text-dim); max-width: 480px; line-height: 1.6; }
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+      }
 
-/* HOW IT WORKS */
-.how-section { background: var(--deep); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; margin-top: 3rem; border: 1px solid var(--border); }
-.how-step { padding: 2rem; border-right: 1px solid var(--border); position: relative; }
-.how-step:last-child { border-right: none; }
-.how-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; color: var(--border-bright); line-height: 1; margin-bottom: 1rem; font-style: italic; }
-.how-title { font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-bright); margin-bottom: 0.6rem; }
-.how-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; }
+      .brand-text span:first-child {
+        font-size: 15px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-dim);
+      }
 
-/* TERMINAL */
-.terminal { background: #050709; border: 1px solid var(--border); padding: 1.5rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; line-height: 1.8; margin-top: 2rem; overflow-x: auto; }
-.terminal-line { display: block; }
-.t-dim { color: var(--text-dim); } .t-green { color: var(--green); } .t-blue { color: var(--blue); } .t-amber { color: var(--amber); } .t-bright { color: var(--text-bright); }
+      .brand-text span:last-child {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
 
-/* BUILDER */
-.builder-section { position: relative; overflow: hidden; }
-.builder-card { border: 1px solid var(--border-bright); background: var(--deep); padding: 3rem; position: relative; max-width: 800px; }
-.builder-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(180deg, var(--green), transparent); }
-.builder-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 1.5rem; }
-.builder-tier { padding: 1.5rem; border: 1px solid var(--border); background: var(--surface); }
-.builder-tier-name { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.8rem; }
-.builder-tier-pct { font-family: 'Playfair Display', serif; font-size: 3rem; color: var(--green); line-height: 1; margin-bottom: 0.4rem; }
-.builder-tier-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; }
-.req-item { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.75rem; font-size: 0.85rem; color: var(--text-dim); }
-.req-check { color: var(--green); font-family: 'IBM Plex Mono', monospace; font-size: 0.75rem; margin-top: 0.1rem; flex-shrink: 0; }
+      .badge {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        color: var(--text-dim);
+        background: rgba(15, 23, 42, 0.8);
+      }
 
-/* SUBSTRATE */
-.substrate-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-.substrate-inner { display: flex; align-items: center; justify-content: space-between; gap: 3rem; flex-wrap: wrap; }
-.substrate-badges { display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0; }
-.substrate-badge { display: flex; align-items: center; gap: 0.6rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.68rem; letter-spacing: 0.1em; color: var(--text-dim); border: 1px solid var(--border); padding: 0.5rem 0.9rem; background: var(--deep); }
-.substrate-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+      main {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+        gap: 24px;
+      }
 
-/* FOOTER */
-footer { background: var(--void); border-top: 1px solid var(--border); padding: 3rem 2rem; }
-.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: flex-start; gap: 3rem; flex-wrap: wrap; }
-.footer-links-col h4 { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 1rem; }
-.footer-links-col a { display: block; font-size: 0.85rem; color: var(--text-dim); text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s; }
-.footer-links-col a:hover { color: var(--green); }
-.footer-bottom { max-width: 1100px; margin: 2rem auto 0; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-.footer-bottom p { font-family: 'IBM Plex Mono', monospace; font-size: 0.65rem; letter-spacing: 0.08em; color: var(--text-dim); }
+      @media (max-width: 840px) {
+        main {
+          grid-template-columns: minmax(0, 1fr);
+        }
+      }
 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.hero-status { animation: fadeUp 0.6s ease forwards; }
-.hero-title { animation: fadeUp 0.6s 0.1s ease both; }
-.hero-sub { animation: fadeUp 0.6s 0.2s ease both; }
-.hero-actions { animation: fadeUp 0.6s 0.3s ease both; }
-.hero-stats { animation: fadeUp 0.6s 0.4s ease both; }
+      .card {
+        background: radial-gradient(circle at top left, #020617, #020617 40%, #020617 100%);
+        border-radius: 18px;
+        border: 1px solid rgba(31, 41, 55, 0.9);
+        box-shadow:
+          0 18px 40px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(15, 23, 42, 0.9);
+        padding: 22px 22px 20px;
+        position: relative;
+        overflow: hidden;
+      }
 
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .how-grid { grid-template-columns: 1fr; }
-  .how-step { border-right: none; border-bottom: 1px solid var(--border); }
-  .how-step:last-child { border-bottom: none; }
-  .builder-split { grid-template-columns: 1fr; gap: 1rem; }
-  .substrate-inner { flex-direction: column; }
-  .tab-switcher { flex-wrap: wrap; }
-  .free-tier { flex-direction: column; }
-}
-</style>
-</head>
-<body>
+      .card::before {
+        content: "";
+        position: absolute;
+        inset: -40%;
+        background:
+          radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.08), transparent 55%),
+          radial-gradient(circle at 100% 0, rgba(56, 189, 248, 0.06), transparent 55%);
+        opacity: 0.9;
+        pointer-events: none;
+      }
 
-<nav>
-  <div class="nav-logo">
-    <div class="nav-shield"></div>
-    <span class="nav-name">FortressCode <span>AI</span></span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#packs">Packs</a></li>
-    <li><a href="#governance">Governance Modules</a></li>
-    <li><a href="#how">How It Works</a></li>
-    <li><a href="#builders">Build With Us</a></li>
-    <li><a href="https://github.com/FortressCodeAI/BaseLayerOS" target="_blank">GitHub</a></li>
-  </ul>
-  <a href="#packs" class="nav-cta">Browse Packs</a>
-</nav>
+      .card-inner {
+        position: relative;
+        z-index: 1;
+      }
 
-<div class="deadline-banner">
-  <span class="deadline-banner-text">⚑ EU AI Act full enforcement —</span>
-  <div class="countdown-units">
-    <div class="countdown-unit">
-      <span class="countdown-num" id="cd-days">--</span>
-      <span class="countdown-label">Days</span>
-    </div>
-    <span class="countdown-sep">:</span>
-    <div class="countdown-unit">
-      <span class="countdown-num" id="cd-hours">--</span>
-      <span class="countdown-label">Hours</span>
-    </div>
-    <span class="countdown-sep">:</span>
-    <div class="countdown-unit">
-      <span class="countdown-num" id="cd-mins">--</span>
-      <span class="countdown-label">Mins</span>
-    </div>
-    <span class="countdown-sep">:</span>
-    <div class="countdown-unit">
-      <span class="countdown-num" id="cd-secs">--</span>
-      <span class="countdown-label">Secs</span>
-    </div>
-  </div>
-  <span class="deadline-banner-text">— August 2, 2026</span>
-</div>
+      .hero-eyebrow {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-dim);
+        margin-bottom: 10px;
+      }
 
-<section class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-inner">
-    <div class="hero-status">Marketplace Live — Verified Deterministic Infrastructure</div>
-    <h1 class="hero-title">
-      Governed AI compliance<br>
-      <em>that actually runs.</em><br>
-      <span class="dim">Not just documented.</span>
-    </h1>
-    <p class="hero-sub">Every pack in this marketplace is built on BaseLayerOS — an open-source deterministic execution substrate. Compliance properties are enforced structurally at runtime, not claimed on paper.</p>
-    <div class="hero-actions">
-      <a href="#packs" class="btn-primary">→ Browse Compliance Packs</a>
-      <a href="https://github.com/FortressCodeAI/BaseLayerOS" target="_blank" class="btn-secondary">↗ Inspect the Substrate</a>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-value">4</span><span class="stat-label">Automated Packs</span></div>
-      <div class="stat"><span class="stat-value">6</span><span class="stat-label">Governance Modules</span></div>
-      <div class="stat"><span class="stat-value">Art. 9–15</span><span class="stat-label">EU AI Act Coverage</span></div>
-      <div class="stat"><span class="stat-value">Open</span><span class="stat-label">Source Substrate</span></div>
-    </div>
-  </div>
-</section>
+      h1 {
+        font-size: 26px;
+        line-height: 1.25;
+        margin-bottom: 10px;
+      }
 
-<section id="packs">
-  <div class="section-inner">
-    <div class="section-label">Marketplace</div>
-    <h2 class="section-title">Choose your governance layer</h2>
-    <p class="section-sub">Two categories. Automated modules that run inside the substrate. Governance modules that deliver fixed-scope compliance artifacts — both substrate-logged, both audit-ready.</p>
+      .hero-subtitle {
+        font-size: 14px;
+        color: var(--text-dim);
+        max-width: 520px;
+        margin-bottom: 18px;
+      }
 
-    <div class="tab-switcher">
-      <button class="tab-btn active" onclick="switchTab('automated')">Automated Packs</button>
-      <button class="tab-btn" onclick="switchTab('governance')">Governance Modules</button>
-    </div>
+      .hero-highlight {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--accent);
+        background: rgba(22, 163, 74, 0.08);
+        border-radius: 999px;
+        padding: 4px 10px;
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        margin-bottom: 18px;
+      }
 
-    <!-- AUTOMATED PACKS -->
-    <div class="tab-content active" id="tab-automated">
+      .hero-highlight-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 999px;
+        background: var(--accent);
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+      }
 
-      <div class="free-tier">
-        <div>
-          <div class="free-tier-badge">Free — Start Here</div>
-          <h3>Architecture Compliance Snapshot</h3>
-          <p>One-time automated assessment. Runs against your existing AI architecture and produces a gap report showing exactly where you fail EU AI Act requirements and how BaseLayerOS fixes each gap. No commitment. Substrate-logged.</p>
-        </div>
-        <a href="mailto:fortresscodeai@outlook.com?subject=Free Compliance Snapshot" class="btn-primary">→ Get Free Snapshot</a>
-      </div>
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
 
-      <div class="packs-grid">
-        <div class="pack-card">
-          <span class="pack-tag eu">EU AI Act</span>
-          <div class="pack-name">AI Act Conformity Assessment</div>
-          <p class="pack-desc">Complete conformity assessment for high-risk AI systems. Generates Annex IV documentation automatically from your execution trace. Audit-ready before the August 2026 deadline.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 9 — Risk Mgmt</span>
-            <span class="pack-article">Art. 10 — Data Gov</span>
-            <span class="pack-article">Art. 11 — Tech Docs</span>
-            <span class="pack-article">Art. 43 — Conformity</span>
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 9px 16px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+        white-space: nowrap;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+        color: #020617;
+        box-shadow:
+          0 0 0 1px rgba(34, 197, 94, 0.5),
+          0 12px 30px rgba(22, 163, 74, 0.45);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow:
+          0 0 0 1px rgba(34, 197, 94, 0.7),
+          0 16px 40px rgba(22, 163, 74, 0.6);
+      }
+
+      .btn-ghost {
+        background: rgba(15, 23, 42, 0.9);
+        color: var(--text-dim);
+        border-color: rgba(55, 65, 81, 0.9);
+      }
+
+      .btn-ghost:hover {
+        border-color: rgba(148, 163, 184, 0.9);
+        background: rgba(15, 23, 42, 1);
+      }
+
+      .hero-footnote {
+        font-size: 11px;
+        color: var(--text-dim);
+      }
+
+      .hero-footnote strong {
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      .section-title {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.16em;
+        color: var(--text-dim);
+        margin-bottom: 10px;
+      }
+
+      .section-heading {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      .section-body {
+        font-size: 13px;
+        color: var(--text-dim);
+        margin-bottom: 14px;
+      }
+
+      .pill-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+
+      .pill {
+        font-size: 11px;
+        padding: 4px 9px;
+        border-radius: 999px;
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        background: rgba(15, 23, 42, 0.9);
+        color: var(--text-dim);
+      }
+
+      .pill-strong {
+        border-color: rgba(34, 197, 94, 0.5);
+        color: var(--accent);
+        background: rgba(22, 163, 74, 0.08);
+      }
+
+      .list {
+        list-style: none;
+        display: grid;
+        gap: 6px;
+        margin-bottom: 14px;
+      }
+
+      .list li {
+        font-size: 13px;
+        color: var(--text-dim);
+        display: flex;
+        gap: 8px;
+      }
+
+      .list li::before {
+        content: "•";
+        color: var(--accent);
+        margin-top: 1px;
+      }
+
+      .divider {
+        height: 1px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(31, 41, 55, 0.9),
+          transparent
+        );
+        margin: 14px 0;
+      }
+
+      .pricing-tag {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 4px;
+        font-size: 13px;
+        margin-bottom: 10px;
+      }
+
+      .pricing-tag strong {
+        font-size: 18px;
+      }
+
+      .note {
+        font-size: 11px;
+        color: var(--text-dim);
+      }
+
+      footer {
+        margin-top: 26px;
+        font-size: 11px;
+        color: var(--text-dim);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: space-between;
+        border-top: 1px solid rgba(31, 41, 55, 0.9);
+        padding-top: 12px;
+      }
+
+      a.text-link {
+        color: var(--link);
+        text-decoration: none;
+      }
+
+      a.text-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header>
+        <div class="brand">
+          <div class="brand-mark"></div>
+          <div class="brand-text">
+            <span>FortressCodeAI</span>
+            <span>Deterministic Governance</span>
           </div>
-          <div class="pack-deliverable">Substrate-logged conformity artifact — immutable, replayable, audit-ready</div>
-          <div class="pack-trigger">Trigger: <span>Regulatory deadline or audit request</span></div>
-          <div class="pack-price"><span class="pack-price-value">110000 GIUs</span><span class="pack-price-period">/ month</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=AI Act Conformity Assessment Pack" class="pack-cta">Request Access →</a>
         </div>
+        <div class="badge">Canada • .ca</div>
+      </header>
 
-        <div class="pack-card featured">
-          <span class="pack-tag deterministic">Deterministic</span>
-          <div class="pack-name">Decision Provenance Pack</div>
-          <p class="pack-desc">Full deterministic decision provenance. Every action logged, every state transition replayable. Any regulator can ask you to reconstruct any decision — you can answer exactly.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 12 — Logging</span>
-            <span class="pack-article">Art. 14 — Oversight</span>
-            <span class="pack-article">Art. 15 — Robustness</span>
-            <span class="pack-article">Replay Engine</span>
+      <main>
+        <!-- Left: Hero / Core pitch -->
+        <section class="card">
+          <div class="card-inner">
+            <div class="hero-eyebrow">Deterministic AI Governance Artifacts</div>
+            <h1>Audit‑ready evidence for AI‑driven workflows.</h1>
+            <p class="hero-subtitle">
+              FortressCodeAI generates deterministic governance artifacts: replayable traces,
+              compliance mappings, and evidence packages produced through BaseLayerOS for
+              organizations operating in regulated environments.
+            </p>
+
+            <div class="hero-highlight">
+              <span class="hero-highlight-dot"></span>
+              <span>Same input → same output → full trace.</span>
+            </div>
+
+            <div class="hero-actions">
+              <a
+                href="https://paypal.me/fortresscodeai/499"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener"
+              >
+                Purchase Artifact — $499 CAD
+              </a>
+              <a href="#sample" class="btn btn-ghost">View Artifact Sample</a>
+            </div>
+
+            <p class="hero-footnote">
+              <strong>Ideal for:</strong> unions, healthcare, financial institutions, government,
+              and enterprise compliance teams.
+            </p>
           </div>
-          <div class="pack-deliverable">Substrate-logged decision trace — same input, same output, provable 100/100</div>
-          <div class="pack-trigger">Trigger: <span>Every governed action — continuous</span></div>
-          <div class="pack-price"><span class="pack-price-value">480000 GIUs</span><span class="pack-price-period">/ month</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Decision Provenance Pack" class="pack-cta">Request Access →</a>
-        </div>
+        </section>
 
-        <div class="pack-card">
-          <span class="pack-tag enterprise">Enterprise</span>
-          <div class="pack-name">Enterprise Change Control</div>
-          <p class="pack-desc">Governed architecture evolution. Every change to your AI system planned, reviewed, and executed under deterministic constraints — auditable end to end. The substrate governs its own evolution.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 9 — Lifecycle</span>
-            <span class="pack-article">Art. 11 — Change Log</span>
-            <span class="pack-article">Evolution Agent</span>
-            <span class="pack-article">Constraint Engine</span>
+        <!-- Right: What / Why / Payment -->
+        <section class="card">
+          <div class="card-inner">
+            <div class="section-title">What you receive</div>
+            <h2 class="section-heading">Deterministic governance artifact package</h2>
+            <p class="section-body">
+              Each artifact is a complete, audit‑ready bundle you can use immediately in internal
+              reviews, regulator conversations, or external audits.
+            </p>
+
+            <ul class="list">
+              <li><strong>Deterministic execution trace</strong> — every step, fully replayable.</li>
+              <li>
+                <strong>Compliance mapping</strong> — aligned to ISO 42001, SOC2, HIPAA, and EU AI
+                Act structures.
+              </li>
+              <li><strong>Evidence PDF</strong> — audit‑ready documentation.</li>
+              <li><strong>Workflow diagram</strong> — visual representation of the governed process.</li>
+              <li><strong>Risk summary</strong> — key risks, mitigations, and governance controls.</li>
+            </ul>
+
+            <div class="divider"></div>
+
+            <div class="section-title">Why deterministic governance matters</div>
+            <p class="section-body">
+              AI systems are non‑deterministic by default. Regulators, auditors, and internal risk
+              teams require traceability, reproducibility, and documented controls. FortressCodeAI
+              produces deterministic governance outputs that satisfy these requirements today.
+            </p>
+
+            <div class="pill-list">
+              <span class="pill pill-strong">Traceable</span>
+              <span class="pill">Replayable</span>
+              <span class="pill">Audit‑ready</span>
+              <span class="pill">Regulator‑aligned</span>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="section-title">Purchase options</div>
+            <p class="pricing-tag">
+              <span>Governance Artifact</span>
+              <strong>$499</strong>
+              <span>CAD</span>
+            </p>
+
+            <p class="section-body">
+              Choose the payment method that works best for your organization. After payment, you
+              will receive access to the artifact package and replay instructions.
+            </p>
+
+            <ul class="list">
+              <li>
+                <strong>PayPal (instant)</strong> — for purchases under $5,000 CAD.<br />
+                Pay via:
+                <a
+                  href="https://paypal.me/fortresscodeai/499"
+                  class="text-link"
+                  target="_blank"
+                  rel="noopener"
+                  >paypal.me/fortresscodeai/499</a
+                >
+              </li>
+              <li>
+                <strong>Wise (enterprise payments)</strong> — for international or higher‑value
+                purchases. A Wise payment link can be provided on request.
+              </li>
+              <li>
+                <strong>Interac e‑Transfer (Canada)</strong> — send $499 CAD to
+                <code>fortresscodeai@outlook.com</code>. Autodeposit enabled. If your institution
+                has daily limits, split the payment; this is standard for Canadian organizations.
+              </li>
+            </ul>
+
+            <a href="#unlock" class="btn btn-ghost" style="margin-top: 4px;">
+              I’ve Paid — Unlock Artifact
+            </a>
+
+            <p class="note" style="margin-top: 8px;">
+              For enterprise workflows (grievance, claims, intake, risk scoring, triage), deterministic
+              governance assessments are available on request.
+            </p>
           </div>
-          <div class="pack-deliverable">Substrate-logged change envelope — every architectural decision recorded</div>
-          <div class="pack-trigger">Trigger: <span>Any architecture change or model update</span></div>
-          <div class="pack-price"><span class="pack-price-value">480000 GIUs</span><span class="pack-price-period">/ month</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Enterprise Change Control Pack" class="pack-cta">Request Access →</a>
-        </div>
+        </section>
+      </main>
 
-        <div class="pack-card">
-          <span class="pack-tag lifecycle">Lifecycle</span>
-          <div class="pack-name">Model Lifecycle Governance</div>
-          <p class="pack-desc">End-to-end model lifecycle management within the substrate. From deployment through modification, retraining, and retirement — every phase governed, logged, and audit-ready.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 9 — Risk Mgmt</span>
-            <span class="pack-article">Art. 72 — Post-Market</span>
-            <span class="pack-article">GIU Metering</span>
-            <span class="pack-article">Lifecycle Audit</span>
+      <!-- Sample / Unlock / Enterprise sections (anchors only for now) -->
+      <section id="sample" style="margin-top: 32px;">
+        <div class="card">
+          <div class="card-inner">
+            <div class="section-title">Artifact sample</div>
+            <p class="section-body">
+              A sample artifact can include a redacted execution trace, a shortened evidence PDF, and
+              a simplified workflow diagram derived from a real grievance or intake process. Link or
+              embed that sample here once you’re ready.
+            </p>
+            <p class="note">
+              You can host the sample PDF or JSON trace in this same repository and link to it
+              directly.
+            </p>
           </div>
-          <div class="pack-deliverable">Substrate-logged lifecycle record — full model history, immutable</div>
-          <div class="pack-trigger">Trigger: <span>Model deployment, update, or retirement event</span></div>
-          <div class="pack-price"><span class="pack-price-value">GIUs 480000</span><span class="pack-price-period">/ month</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Model Lifecycle Governance Pack" class="pack-cta">Request Access →</a>
         </div>
-      </div>
-      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.08em;margin-top:1rem;">All prices in CAD. Annual prepay available at 20% discount. Custom enterprise contracts available — <a href="mailto:fortresscodeai@outlook.com" style="color:var(--green);text-decoration:none;">contact us</a>.</p>
-    </div>
+      </section>
 
-    <!-- GOVERNANCE MODULES -->
-    <div class="tab-content" id="tab-governance" id="governance">
-
-      <div class="free-tier">
-        <div>
-          <div class="free-tier-badge">Entry Point — Fixed Price</div>
-          <h3>One-Time Conformity Assessment</h3>
-          <p>Fixed scope. Fixed price. Fixed timeline. We assess your AI architecture against EU AI Act requirements and deliver a gap report in 5 business days. Payable via PayPal or Wise. No subscription commitment required.</p>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--text-bright);margin-bottom:0.3rem;">$200000 GIUs</div>
-          <div style="font-family:'IBM Plex Mono',monospace;font-size:0.65rem;color:var(--text-dim);margin-bottom:1rem;">one-time · 5 business days</div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Conformity Assessment" class="btn-primary">→ Book Assessment</a>
-        </div>
-      </div>
-
-      <div class="packs-grid">
-        <div class="pack-card">
-          <span class="pack-tag governance">Governance</span>
-          <div class="pack-name">Monthly Oversight Pack</div>
-          <p class="pack-desc">Monthly oversight summary covering reproducibility verification, risk flags, and GIU consumption report. Every governed action that month — logged, counted, and reviewed.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 14 — Oversight</span>
-            <span class="pack-article">Art. 12 — Logging</span>
-            <span class="pack-article">Art. 15 — Robustness</span>
+      <section id="unlock" style="margin-top: 18px;">
+        <div class="card">
+          <div class="card-inner">
+            <div class="section-title">Unlock artifact</div>
+            <p class="section-body">
+              After completing payment via PayPal, Wise, or Interac, you can provide your transaction
+              reference to receive your artifact package. For now, this can be handled manually via
+              email while you iterate on automated delivery.
+            </p>
+            <p class="note">
+              Contact:
+              <a href="mailto:fortresscodeai@outlook.com" class="text-link"
+                >fortresscodeai@outlook.com</a
+              >
+              with your payment confirmation and preferred delivery format (PDF bundle, JSON trace,
+              or both).
+            </p>
           </div>
-          <div class="pack-deliverable">PDF report + substrate-logged governance event — immutable, replayable</div>
-          <div class="pack-trigger">Trigger: <span>Monthly schedule — delivered first business day</span></div>
-          <div class="pack-price"><span class="pack-price-value">480000 GIU</span><span class="pack-price-period">/ month</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Monthly Oversight Pack" class="pack-cta">Request Access →</a>
         </div>
+      </section>
 
-        <div class="pack-card featured">
-          <span class="pack-tag governance">Governance</span>
-          <div class="pack-name">Reproducibility Audit Module</div>
-          <p class="pack-desc">Quarterly deep audit of your system's deterministic behavior. Proves every output is reproducible. Produces a regulator-ready reproducibility certificate tied to your substrate's cryptographic proof chain.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 15 — Accuracy</span>
-            <span class="pack-article">Art. 12 — Logging</span>
-            <span class="pack-article">Replay Engine</span>
+      <section style="margin-top: 18px;">
+        <div class="card">
+          <div class="card-inner">
+            <div class="section-title">Enterprise upgrade</div>
+            <h2 class="section-heading">Deterministic governance assessments</h2>
+            <p class="section-body">
+              If you want your own workflow governed deterministically — such as grievance handling,
+              claims processing, intake, risk scoring, or triage — FortressCodeAI offers
+              workflow‑specific governance assessments built on BaseLayerOS.
+            </p>
+            <p class="note">
+              For enterprise inquiries, reach out at
+              <a href="mailto:fortresscodeai@outlook.com" class="text-link"
+                >fortresscodeai@outlook.com</a
+              >
+              with a brief description of your workflow and regulatory context.
+            </p>
           </div>
-          <div class="pack-deliverable">Reproducibility certificate + substrate replay proof — cryptographically verifiable</div>
-          <div class="pack-trigger">Trigger: <span>Quarterly or pre-audit request</span></div>
-          <div class="pack-price"><span class="pack-price-value">650000 GIUs</span><span class="pack-price-period">/ quarter</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Reproducibility Audit Module" class="pack-cta">Request Access →</a>
         </div>
+      </section>
 
-        <div class="pack-card">
-          <span class="pack-tag governance">Governance</span>
-          <div class="pack-name">AI Risk Mapping Module</div>
-          <p class="pack-desc">Complete risk mapping of your AI system against EU AI Act Annex III classifications. Identifies your risk tier, maps obligations, and produces an Article 9 compliant risk management document.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 9 — Risk Mgmt</span>
-            <span class="pack-article">Annex III — Classification</span>
-            <span class="pack-article">Art. 10 — Data</span>
-          </div>
-          <div class="pack-deliverable">Risk register + substrate-logged risk assessment — Annex IV compliant</div>
-          <div class="pack-trigger">Trigger: <span>New AI system deployment or significant change</span></div>
-          <div class="pack-price"><span class="pack-price-value">320000 GIUs</span><span class="pack-price-period">/ assessment</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=AI Risk Mapping Module" class="pack-cta">Request Access →</a>
-        </div>
-
-        <div class="pack-card">
-          <span class="pack-tag governance">Governance</span>
-          <div class="pack-name">Article 14 Oversight Module</div>
-          <p class="pack-desc">Establishes and documents your human oversight architecture. Maps authority tokens, override capabilities, and intervention records to Article 14 requirements. Proves oversight was technically enforced, not just policy-stated.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 14 — Human Oversight</span>
-            <span class="pack-article">Authority Tokens</span>
-            <span class="pack-article">Override Log</span>
-          </div>
-          <div class="pack-deliverable">Oversight architecture document + substrate authority log — immutable record</div>
-          <div class="pack-trigger">Trigger: <span>Initial deployment or oversight review</span></div>
-          <div class="pack-price"><span class="pack-price-value">480000 GIUs</span><span class="pack-price-period">/ month</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Article 14 Oversight Module" class="pack-cta">Request Access →</a>
-        </div>
-
-        <div class="pack-card">
-          <span class="pack-tag governance">Governance</span>
-          <div class="pack-name">Deterministic Architecture Review</div>
-          <p class="pack-desc">Deep technical review of your AI architecture's determinism properties. Identifies every point of non-determinism, quantifies regulatory risk at each point, and produces a remediation roadmap.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 15 — Robustness</span>
-            <span class="pack-article">Art. 9 — Risk Mgmt</span>
-            <span class="pack-article">Substrate Gap Analysis</span>
-          </div>
-          <div class="pack-deliverable">Architecture review report + remediation roadmap — substrate-logged findings</div>
-          <div class="pack-trigger">Trigger: <span>Pre-deployment or compliance gap identified</span></div>
-          <div class="pack-price"><span class="pack-price-value">550000 GIUs</span><span class="pack-price-period">/ review</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Deterministic Architecture Review" class="pack-cta">Request Access →</a>
-        </div>
-
-        <div class="pack-card">
-          <span class="pack-tag governance">Governance</span>
-          <div class="pack-name">Deterministic Review Unit (DRU)</div>
-          <p class="pack-desc">On-demand governance review for specific AI decisions under regulatory scrutiny. Replays the exact execution, produces a signed review artifact, and delivers a regulator-ready explanation of what happened and why.</p>
-          <div class="pack-articles">
-            <span class="pack-article">Art. 12 — Logging</span>
-            <span class="pack-article">Art. 14 — Oversight</span>
-            <span class="pack-article">Replay Engine</span>
-          </div>
-          <div class="pack-deliverable">Signed DRU artifact + replay proof — admissible governance evidence</div>
-          <div class="pack-trigger">Trigger: <span>Regulatory inquiry, complaint, or audit request</span></div>
-          <div class="pack-price"><span class="pack-price-value">250000 GIU</span><span class="pack-price-period">/ review</span></div>
-          <a href="mailto:fortresscodeai@outlook.com?subject=Deterministic Review Unit" class="pack-cta">Request Access →</a>
-        </div>
-      </div>
-      <p style="font-family:'IBM Plex Mono',monospace;font-size:0.68rem;color:var(--text-dim);letter-spacing:0.08em;margin-top:1rem;">All prices in GIUs All governance modules delivered as substrate-logged governance events — immutable, replayable, audit-ready. <a href="mailto:fortresscodeai@outlook.com" style="color:var(--green);text-decoration:none;">Contact us</a> for custom arrangements.</p>
+      <footer>
+        <span>© FortressCodeAI — Deterministic AI Governance</span>
+        <span>Built and operated in Canada (.ca)</span>
+      </footer>
     </div>
-  </div>
-</section>
-
-<section id="how" class="how-section">
-  <div class="section-inner">
-    <div class="section-label">How It Works</div>
-    <h2 class="section-title">Compliance enforced at the execution layer</h2>
-    <p class="section-sub">Most compliance tools operate above your AI system. BaseLayerOS operates underneath it — so governance properties are structurally true, not just documented.</p>
-    <div class="how-grid">
-      <div class="how-step"><div class="how-num">01</div><div class="how-title">Deploy the Substrate</div><p class="how-desc">BaseLayerOS sits underneath your AI model. Every action passes through the deterministic execution engine. No bypass path exists.</p></div>
-      <div class="how-step"><div class="how-num">02</div><div class="how-title">Select Your Pack</div><p class="how-desc">Choose automated packs for continuous runtime governance or governance modules for fixed-scope compliance deliverables. Or both.</p></div>
-      <div class="how-step"><div class="how-num">03</div><div class="how-title">Actions Are Governed</div><p class="how-desc">Every action is validated, invariant-checked, and logged. Refusals are recorded as first-class artifacts — visible, reproducible, inspectable.</p></div>
-      <div class="how-step"><div class="how-num">04</div><div class="how-title">Audit On Demand</div><p class="how-desc">Any execution path can be replayed exactly. Regulators get deterministic proof — not a retrospective documentation exercise.</p></div>
-    </div>
-    <div class="terminal">
-      <span class="terminal-line"><span class="t-dim">// Execution trace — BaseLayerOS runtime</span></span>
-      <span class="terminal-line"><span class="t-green">✓</span> <span class="t-bright">action.validate</span> <span class="t-dim">preconditions=True | state_in={"counter": 0}</span></span>
-      <span class="terminal-line"><span class="t-green">✓</span> <span class="t-bright">action.execute</span> <span class="t-dim">state_out={"counter": 1} | GIU_consumed=1</span></span>
-      <span class="terminal-line"><span class="t-amber">⚑</span> <span class="t-bright">action.validate</span> <span class="t-dim">preconditions=False | reason="authority_check_failed"</span></span>
-      <span class="terminal-line"><span class="t-dim">✗</span> <span class="t-bright">action.refuse</span> <span class="t-dim">state_unchanged=True | refusal_recorded=True</span></span>
-      <span class="terminal-line"><span class="t-dim">—</span> <span class="t-bright">action.halt</span> <span class="t-dim">subsequent_actions=blocked | audit_entry=written</span></span>
-      <span class="terminal-line"> </span>
-      <span class="terminal-line"><span class="t-dim">// Replay verification</span></span>
-      <span class="terminal-line"><span class="t-blue">replay</span><span class="t-dim">(session_id="a4f2c9") →</span> <span class="t-green">IDENTICAL | deterministic_hash=verified</span></span>
-    </div>
-  </div>
-</section>
-
-<section id="builders" class="builder-section">
-  <div class="section-inner">
-    <div class="section-label">Builder Program</div>
-    <h2 class="section-title">Build on BaseLayerOS.<br>List on the marketplace.</h2>
-    <p class="section-sub">Building deterministic AI governance infrastructure? Submit a verified component and earn revenue every time an enterprise deploys it. No commitment required.</p>
-    <div class="builder-card">
-      <div class="builder-split">
-        <div class="builder-tier">
-          <div class="builder-tier-name">Standard Builder</div>
-          <div class="builder-tier-pct">70%</div>
-          <p class="builder-tier-desc">70% of every sale. No upfront cost. Submit, verify, list. Automated payouts on every transaction.</p>
-        </div>
-        <div class="builder-tier">
-          <div class="builder-tier-name">Approved Builder</div>
-          <div class="builder-tier-pct">80%</div>
-          <p class="builder-tier-desc">80% for builders whose components achieve approved status through extended verification and deployment track record.</p>
-        </div>
-      </div>
-      <div style="margin-top:2rem;">
-        <div class="req-item"><span class="req-check">→</span><span>Component must run on BaseLayerOS substrate or be substrate-compatible</span></div>
-        <div class="req-item"><span class="req-check">→</span><span>Must pass deterministic verification — identical output 100/100 test runs</span></div>
-        <div class="req-item"><span class="req-check">→</span><span>No malicious code — automated and manual review before listing</span></div>
-        <div class="req-item"><span class="req-check">→</span><span>No commitment required — submit when ready, list if it passes</span></div>
-      </div>
-      <div style="margin-top:2rem;">
-        <a href="mailto:fortresscodeai@outlook.com?subject=Builder Program" class="btn-primary">Apply to Build →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="substrate-section">
-  <div class="section-inner">
-    <div class="substrate-inner">
-      <div>
-        <div class="section-label">Open Source Foundation</div>
-        <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:400;color:var(--text-bright);margin-bottom:0.8rem;">The substrate is public.<br>Inspect it yourself.</h3>
-        <p style="font-size:0.88rem;color:var(--text-dim);max-width:480px;line-height:1.7;margin-bottom:1.5rem;">BaseLayerOS is Apache 2.0 licensed. Every governance property claimed by packs in this marketplace can be verified against the open-source substrate. No black box at the execution layer.</p>
-        <a href="https://github.com/FortressCodeAI/BaseLayerOS" target="_blank" class="btn-secondary">↗ View on GitHub</a>
-      </div>
-      <div class="substrate-badges">
-        <div class="substrate-badge"><span class="substrate-badge-dot"></span>Deterministic execution — seeds locked</div>
-        <div class="substrate-badge"><span class="substrate-badge-dot"></span>Invariant enforcement — pre & postconditions</div>
-        <div class="substrate-badge"><span class="substrate-badge-dot"></span>Replay engine — exact state reconstruction</div>
-        <div class="substrate-badge"><span class="substrate-badge-dot"></span>GIU metering — every action accountable</div>
-        <div class="substrate-badge"><span class="substrate-badge-dot"></span>Refusal as first-class artifact</div>
-        <div class="substrate-badge"><span class="substrate-badge-dot"></span>Apache 2.0 — open source</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div>
-      <div class="nav-logo" style="margin-bottom:0.8rem;">
-        <div class="nav-shield"></div>
-        <span class="nav-name">FortressCode <span>AI</span></span>
-      </div>
-      <p style="font-size:0.82rem;color:var(--text-dim);max-width:320px;line-height:1.65;margin-top:0.5rem;">Deterministic AI governance infrastructure. Built from first principles. Open source substrate. Enterprise compliance layer. Kitchener, Ontario, Canada.</p>
-    </div>
-    <div class="footer-links-col">
-      <h4>Marketplace</h4>
-      <a href="#packs">Automated Packs</a>
-      <a href="#governance">Governance Modules</a>
-      <a href="#builders">Builder Program</a>
-    </div>
-    <div class="footer-links-col">
-      <h4>Substrate</h4>
-      <a href="https://github.com/FortressCodeAI/BaseLayerOS" target="_blank">GitHub — BaseLayerOS</a>
-      <a href="https://github.com/FortressCodeAI/BaseLayerOS" target="_blank">Documentation</a>
-      <a href="https://github.com/FortressCodeAI/BaseLayerOS" target="_blank">Apache 2.0 License</a>
-    </div>
-    <div class="footer-links-col">
-      <h4>Contact</h4>
-      <a href="mailto:fortresscodeai@outlook.com">fortresscodeai@outlook.com</a>
-      <a href="https://linkedin.com/company/fortresscodeai" target="_blank">LinkedIn</a>
-      <a href="https://fortresscodeai.github.io">fortresscodeai.github.io</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 FortressCode AI. All rights reserved. Built on BaseLayerOS (Apache 2.0). Kitchener, Ontario, Canada.</p>
-    <p>Not legal advice. EU AI Act compliance depends on your specific system and use case.</p>
-  </div>
-</footer>
-
-<script>
-// Live countdown to August 2, 2026 00:00:00 UTC
-function updateCountdown() {
-  const target = new Date('2026-08-02T00:00:00Z');
-  const now = new Date();
-  const diff = target - now;
-  if (diff <= 0) {
-    document.getElementById('cd-days').textContent = '00';
-    document.getElementById('cd-hours').textContent = '00';
-    document.getElementById('cd-mins').textContent = '00';
-    document.getElementById('cd-secs').textContent = '00';
-    return;
-  }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-  const secs = Math.floor((diff % (1000 * 60)) / 1000);
-  document.getElementById('cd-days').textContent = String(days).padStart(2, '0');
-  document.getElementById('cd-hours').textContent = String(hours).padStart(2, '0');
-  document.getElementById('cd-mins').textContent = String(mins).padStart(2, '0');
-  document.getElementById('cd-secs').textContent = String(secs).padStart(2, '0');
-}
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-// Tab switcher
-function switchTab(tab) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-  event.target.classList.add('active');
-}
-</script>
-</body>
+  </body>
 </html>
