@@ -1,0 +1,193 @@
+/* FortressCodeAI Landing Page Styles */
+
+:root {
+  --bg: #05070b;
+  --surface: #0d1117;
+  --surface-soft: #111827;
+  --accent: #22c55e;
+  --accent-soft: rgba(34, 197, 94, 0.12);
+  --accent-strong: #16a34a;
+  --text: #e5e7eb;
+  --text-dim: #9ca3af;
+  --border: #1f2933;
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Segoe UI", sans-serif;
+  --radius: 10px;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: #020617;
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: radial-gradient(circle at 30% 20%, #4ade80, #16a34a 40%, #052e16 100%);
+}
+
+.brand-text span:first-child {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.brand-text span:last-child {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  color: var(--text-dim);
+}
+
+main {
+  display: grid;
+  grid-template-columns: 3fr 2.5fr;
+  gap: 24px;
+}
+
+@media (max-width: 840px) {
+  main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background: #0d1117;
+  border-radius: 18px;
+  border: 1px solid rgba(31, 41, 55, 0.9);
+  padding: 22px;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-dim);
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.hero-subtitle {
+  font-size: 14px;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+}
+
+.hero-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--accent);
+  background: rgba(22, 163, 74, 0.08);
+  border-radius: 999px;
+  padding: 4px 10px;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  margin-bottom: 18px;
+}
+
+.hero-highlight-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #020617;
+}
+
+.btn-ghost {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text-dim);
+  border-color: rgba(55, 65, 81, 0.9);
+}
+
+.section-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.section-heading {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.section-body {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list li {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+
+.divider {
+  height: 1px;
+  background: rgba(31, 41, 55, 0.9);
+  margin: 14px 0;
+}
+
+footer {
+  margin-top: 26px;
+  font-size: 11px;
+  color: var(--text-dim);
+  border-top: 1px solid rgba(31, 41, 55, 0.9);
+  padding-top: 12px;
+}
