@@ -1,85 +1,58 @@
-import { API_URL } from "./config.js";
-import { renderModulesView } from "./views/modules.js";
-import { renderEnvelopeView } from "./views/envelope.js";
-import { renderHITLView } from "./views/hitl.js";
-import { renderMarketplaceView } from "./views/marketplace.js";
-import { renderLogsView } from "./views/logs.js";
+// FortressCodeAI Marketplace – front-end logic
 
-const contentArea = document.getElementById("content-area");
-const eventLog = document.getElementById("event-log");
+const PAYPAL_ME_BASE = "https://www.paypal.me/FortressCodeAI";
 
-document.querySelectorAll(".nav-item").forEach(btn => {
-  btn.addEventListener("click", () => loadView(btn.dataset.view));
-});
+let selectedPack = null;
 
-loadView("dashboard");
-verifyIdentity();
-connectEventStream();
+function initPackSelection() {
+  const cards = document.querySelectorAll(".pack-card");
+  const nameEl = document.getElementById("selected-pack-name");
+  const priceEl = document.getElementById("selected-pack-price");
+  const payBtn = document.getElementById("pay-button");
 
-function loadView(view) {
-  if (view === "dashboard") {
-    contentArea.innerHTML = `
-      <div class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">Builder Dashboard</div>
-            <div class="card-subtitle">Design, govern, and publish deterministic modules.</div>
-          </div>
-        </div>
-        <p>Use the navigation to create modules, run them through the Governance Envelope, and publish to the marketplace.</p>
-      </div>
-    `;
-  } else if (view === "modules") {
-    renderModulesView(contentArea);
-  } else if (view === "envelope") {
-    renderEnvelopeView(contentArea);
-  } else if (view === "hitl") {
-    renderHITLView(contentArea);
-  } else if (view === "marketplace") {
-    renderMarketplaceView(contentArea);
-  } else if (view === "logs") {
-    renderLogsView(contentArea);
-  } else if (view === "settings") {
-    contentArea.innerHTML = `
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title">Settings</div>
-        </div>
-        <p>Configure API URL and Supabase in <code>config.js</code>.</p>
-      </div>
-    `;
+  function updatePayButton() {
+    if (!selectedPack) {
+      payBtn.classList.add("disabled");
+      payBtn.href = "#";
+      return;
+    }
+
+    payBtn.classList.remove("disabled");
+
+    const amount = selectedPack.price;
+    // PayPal.Me supports /amount at the end
+    const url = amount > 0 ? `${PAYPAL_ME_BASE}/${amount}` : PAYPAL_ME_BASE;
+    payBtn.href = url;
   }
-}
 
-async function verifyIdentity() {
-  try {
-    const res = await fetch(`${API_URL}/auth/verify`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        signature: "dev-mode",
-        publicKey: "dev-mode",
-        nonce: "123"
-      })
+  cards.forEach(card => {
+    card.addEventListener("click", () => {
+      cards.forEach(c => c.classList.remove("selected"));
+      card.classList.add("selected");
+
+      const packId = card.getAttribute("data-pack-id");
+      const price = parseFloat(card.getAttribute("data-price"));
+      const title = card.querySelector("h3").textContent;
+
+      selectedPack = { id: packId, title, price };
+
+      nameEl.textContent = title;
+      priceEl.textContent = price > 0 ? `· CA$${price.toFixed(2)}` : "· Free";
+
+      updatePayButton();
     });
+  });
 
-    const data = await res.json();
-    document.getElementById("user-name").textContent = data.userId || "dev-user";
-    document.getElementById("authority-level").textContent = `Authority: ${data.authorityLevel || "builder"}`;
-  } catch {
-    document.getElementById("user-name").textContent = "offline-dev";
-    document.getElementById("authority-level").textContent = "Authority: local";
-  }
+  // Initial state
+  payBtn.classList.add("disabled");
+  payBtn.addEventListener("click", (e) => {
+    if (!selectedPack) {
+      e.preventDefault();
+      alert("Please select a governance artifact before proceeding to payment.");
+    }
+  });
 }
 
-function connectEventStream() {
-  try {
-    const ws = new WebSocket(`${API_URL.replace("https", "wss")}/events`);
-    ws.onmessage = msg => {
-      const event = JSON.parse(msg.data);
-      eventLog.textContent += `\n${new Date().toISOString()} — ${event.type}`;
-    };
-  } catch {
-    eventLog.textContent += "\nEvent stream unavailable in dev mode.";
-  }
-}
+document.addEventListener("DOMContentLoaded", () => {
+  initPackSelection();
+});
