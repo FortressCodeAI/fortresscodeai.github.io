@@ -2,46 +2,182 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FortressCode Builder Dashboard</title>
+  <title>FortressCodeAI Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div id="app">
-    <aside class="sidebar">
-      <h2 class="logo">FortressCode</h2>
-      <nav>
-        <button class="nav-item" data-view="dashboard">Dashboard</button>
-        <button class="nav-item" data-view="modules">Modules</button>
-        <button class="nav-item" data-view="envelope">Governance Envelope</button>
-        <button class="nav-item" data-view="hitl">HITL Approvals</button>
-        <button class="nav-item" data-view="marketplace">Marketplace</button>
-        <button class="nav-item" data-view="logs">Substrate Logs</button>
-        <button class="nav-item" data-view="settings">Settings</button>
-      </nav>
-    </aside>
+  <header class="header">
+    <div class="header-inner">
+      <div>
+        <h1>FortressCodeAI Marketplace</h1>
+        <p>Deterministic AI Governance Artifacts for Regulated Enterprises</p>
+      </div>
+      <div class="header-tag">
+        <span>Substrate‑Generated · Regulator‑Ready · Enterprise‑Grade</span>
+      </div>
+    </div>
+  </header>
 
-    <main class="main">
-      <header class="topbar">
-        <div class="status">
-          <span id="system-status" class="status-dot green"></span>
-          <span>Connected</span>
+  <main class="main">
+    <section class="intro">
+      <h2>Protect your organization from AI fines, audits, and regulatory failures</h2>
+      <p>
+        Each artifact listed below is generated from a deterministic governance substrate and designed
+        to satisfy real regulatory expectations under the EU AI Act, ISO 42001, NIST AI RMF, and
+        enterprise audit requirements.
+      </p>
+    </section>
+
+    <section class="packs">
+      <h2>Governance Artifacts</h2>
+      <div class="pack-list">
+
+        <div class="pack-card" data-pack-id="risk_classification" data-price="500">
+          <h3>AI System Risk Classification Report</h3>
+          <p>
+            Deterministic risk classification aligned to EU AI Act Article 6 and ISO 42001.
+            Includes evidence, justification, and recommended controls.
+          </p>
+          <p class="price">CA$500</p>
         </div>
-        <div class="user-info">
-          <span id="user-name">Loading...</span>
-          <span id="authority-level" class="badge">Authority: Unknown</span>
+
+        <div class="pack-card" data-pack-id="inventory_registry" data-price="350">
+          <h3>AI System Inventory & Registry Entry</h3>
+          <p>
+            Standardized registry entry for your AI system, including purpose, risk tier, data sources,
+            and governance controls.
+          </p>
+          <p class="price">CA$350</p>
         </div>
-      </header>
 
-      <section id="content-area"></section>
+        <div class="pack-card" data-pack-id="governance_envelope_certificate" data-price="750">
+          <h3>Governance Envelope Certificate</h3>
+          <p>
+            Signed certificate proving your AI system operates inside a deterministic governance envelope.
+            Regulator‑ready documentation.
+          </p>
+          <p class="price">CA$750</p>
+        </div>
 
-      <footer class="console">
-        <h3>Event Stream</h3>
-        <div id="event-log"></div>
-      </footer>
-    </main>
-  </div>
+        <div class="pack-card" data-pack-id="audit_trail_pack" data-price="1000">
+          <h3>Deterministic Audit Trail Pack</h3>
+          <p>
+            Tamper‑evident, replayable audit trail with action logs, justification chains, and state transitions.
+          </p>
+          <p class="price">CA$1,000</p>
+        </div>
 
-  <script type="module" src="app.js"></script>
+        <div class="pack-card" data-pack-id="refusal_event_report" data-price="400">
+          <h3>Refusal Event Report</h3>
+          <p>
+            Detailed report showing when and why the AI refused unsafe or non‑compliant actions.
+            Highly valued by regulators and risk teams.
+          </p>
+          <p class="price">CA$400</p>
+        </div>
+
+        <div class="pack-card" data-pack-id="model_interaction_contract" data-price="600">
+          <h3>Model Interaction Contract</h3>
+          <p>
+            Deterministic contract defining how your system interacts with any AI model.
+            Eliminates vendor lock‑in and standardizes behavior.
+          </p>
+          <p class="price">CA$600</p>
+        </div>
+
+        <div class="pack-card" data-pack-id="capability_boundary_report" data-price="800">
+          <h3>Capability Boundary Report</h3>
+          <p>
+            Formal definition of what your AI system can and cannot do, including enforced boundaries
+            and capability maps.
+          </p>
+          <p class="price">CA$800</p>
+        </div>
+
+        <div class="pack-card" data-pack-id="high_risk_compliance_pack" data-price="2000">
+          <h3>High‑Risk System Compliance Pack</h3>
+          <p>
+            Complete compliance pack for high‑risk systems under the EU AI Act, including risk controls,
+            governance evidence, testing logs, and documentation.
+          </p>
+          <p class="price">CA$2,000</p>
+        </div>
+
+        <div class="pack-card" data-pack-id="incident_reconstruction" data-price="1500">
+          <h3>AI Incident Reconstruction Report</h3>
+          <p>
+            Deterministic reconstruction of an AI incident with timeline, root cause, state transitions,
+            and corrective actions.
+          </p>
+          <p class="price">CA$1,500</p>
+        </div>
+
+        <div class="pack-card" data-pack-id="data_lineage_report" data-price="900">
+          <h3>Data Provenance & Lineage Report</h3>
+          <p>
+            Full lineage graph showing where data came from, how it was transformed, and how it was used.
+            Supports GDPR and AI Act transparency.
+          </p>
+          <p class="price">CA$900</p>
+        </div>
+
+        <div class="pack-card" data-pack-id="human_oversight_pack" data-price="700">
+          <h3>Human Oversight Validation Pack</h3>
+          <p>
+            Proof that humans can supervise, override, and intervene in AI decisions, including oversight
+            checkpoints and override logs.
+          </p>
+          <p class="price">CA$700</p>
+        </div>
+
+        <div class="pack-card" data-pack-id="deployment_safety_case" data-price="1800">
+          <h3>Deployment Safety Case</h3>
+          <p>
+            Complete safety case for deploying an AI system in production, including hazards, mitigations,
+            controls, and evidence.
+          </p>
+          <p class="price">CA$1,800</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="checkout">
+      <h2>Checkout</h2>
+      <p>Select a governance artifact above, then complete payment via PayPal.</p>
+
+      <div id="selected-pack" class="selected-pack">
+        <div class="selected-label">Selected artifact:</div>
+        <div class="selected-main">
+          <span id="selected-pack-name">None selected</span>
+          <span id="selected-pack-price"></span>
+        </div>
+      </div>
+
+      <a id="pay-button" class="pay-btn" href="#" target="_blank" rel="noopener noreferrer">
+        Pay Now via PayPal
+      </a>
+
+      <div class="after-payment">
+        <h3>After payment</h3>
+        <p>
+          After completing payment, please send your transaction ID and the name of the artifact you purchased to:
+        </p>
+        <a class="email-link" href="mailto:fortresscodeai@outlook.com?subject=Governance%20Artifact%20Purchase">
+          fortresscodeai@outlook.com
+        </a>
+        <p class="after-note">
+          You will receive a confirmation and delivery timeline once your payment is verified.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>FortressCodeAI · Deterministic AI Governance Substrate</p>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
